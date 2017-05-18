@@ -7,24 +7,27 @@ var valid = require('validator');
 
 var pre = '.';
 var game = 'With your Mum\'s pussy';
+var startChannel = "nsfw-bigbong";
+var channel;
 
 bot.on('message', (message) => {
     // qol things 
     if (!message.content.startsWith(pre)) return;
     if (message.author.bot) return;
 
-    let command = message.content.split(" ")[0];                                                                                                        command = command.slice(pre.length);
+    let command = message.content.split(" ")[0];                                                                                    
+	command = command.slice(pre.length);
 
     let args = message.content.split(" ").slice(1);
 
     if (command === "say") {
-	message.channel.send(args.join(" "));
+		message.channel.send(args.join(" "));
     }
 
     if (command === "changeGame") {
 	var newGame = args.join(" ");
-	bot.user.setGame(newGame);
-	message.channel.send("Game changed");
+		bot.user.setGame(newGame);
+		message.channel.send("Game changed");
     }
     
     // commands
@@ -33,7 +36,7 @@ bot.on('message', (message) => {
     }
 
     if (command === 'big') {
-	message.channel.send('BONG!');
+		message.channel.send('BONG!');
     }
 
 });
@@ -41,22 +44,26 @@ bot.on('message', (message) => {
 bot.on("ready", function () {
     console.log("Ready");
     bot.user.setGame(game);
-
     var schedule = require('node-schedule');
 
+	channel = bot.channels.find("name", startChannel);
+
     var j = schedule.scheduleJob('0 * * * *', function(){
-	var sd = new Date();
-	var hour = sd.getHours();
-	var bong_o_clock = "";
-	for (i = 0; i < hour; i++) {
-	    bong_o_clock += "BONG! ";
-	}
-	console.log('it bonged fam');
-	bot.channels.get('314522923593498634').send(bong_o_clock);
+		var sd = new Date();
+		var hour = sd.getHours();
+		var bong_o_clock = "";
+		for (i = 0; i < hour; i++) {
+	   		bong_o_clock += "BONG! ";
+			if (i == 23) {
+				bong_o_clock += "Maximum BONGEGE!!!";
+			}
+		}
+		console.log('it bonged fam');
+		channel.send(bong_o_clock);
     });
 
 });
 
 //bot.channels.get('314522923593498634').send('BONG!');
 
-bot.login(settings.test_bot); 
+bot.login(settings.real_bot); 
