@@ -39,6 +39,12 @@ bot.on('message', (message) => {
 		message.channel.send('BONG!');
     }
 
+	if (command === 'changeChannel') {
+		newChannel = args[0];
+		channel = bot.channels.find("name", newChannel);
+		message.channel.send("Switched channel to " + newChannel);
+	}	
+
 });
 
 bot.on("ready", function () {
@@ -52,10 +58,14 @@ bot.on("ready", function () {
 		var sd = new Date();
 		var hour = sd.getHours();
 		var bong_o_clock = "";
-		for (i = 0; i < hour; i++) {
-	   		bong_o_clock += "BONG! ";
-			if (i == 23) {
-				bong_o_clock += "Maximum BONGEGE!!!";
+		if (hour === 0) {
+			bong_o_clock += "Midnight BONG!";
+		} else {
+			for (i = 0; i < hour; i++) {
+	   			bong_o_clock += "BONG! ";
+				if (i == 23) {
+					bong_o_clock += "Maximum BONGEGE!!!";
+				}
 			}
 		}
 		console.log('it bonged fam');
@@ -63,7 +73,5 @@ bot.on("ready", function () {
     });
 
 });
-
-//bot.channels.get('314522923593498634').send('BONG!');
 
 bot.login(settings.real_bot); 
